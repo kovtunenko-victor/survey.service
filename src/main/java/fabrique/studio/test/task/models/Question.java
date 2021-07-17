@@ -1,5 +1,6 @@
 package fabrique.studio.test.task.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,15 +22,16 @@ import lombok.Setter;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @Column(name = "id")
+    private Long question_id;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "survey_id")
+    private Survey survey;
     private String text;
     
     @Enumerated(EnumType.STRING)
     private AnswerType answerType;
-    
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
-    private Survey survey;
     
     public Question() {
        

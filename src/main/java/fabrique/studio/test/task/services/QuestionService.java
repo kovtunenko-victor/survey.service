@@ -12,8 +12,8 @@ public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
     
-    public void saveQuestion(Question question) {
-        questionRepository.save(question);
+    public Question saveQuestion(Question question) {
+        return questionRepository.save(question);
     }
     
     public Optional<Question> findByQuestionId(Long id) {

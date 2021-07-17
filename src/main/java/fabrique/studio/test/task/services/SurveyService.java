@@ -11,8 +11,8 @@ public class SurveyService {
     @Autowired
     private SurveyRepository surveyRepository;
     
-    public void saveSurvey(Survey survey) {
-        surveyRepository.save(survey);
+    public Survey saveSurvey(Survey survey) {
+        return surveyRepository.save(survey);
     }
     
     public Optional<Survey> findBySurveyId(Long id) {

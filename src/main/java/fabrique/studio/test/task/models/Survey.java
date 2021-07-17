@@ -3,6 +3,7 @@ package fabrique.studio.test.task.models;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,8 @@ import lombok.Setter;
 public class Survey {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @Column(name = "id")
+    private Long survey_id;
     private String name;
     private String title;
     private Date dateStart;
