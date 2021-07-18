@@ -1,9 +1,9 @@
 package fabrique.studio.test.task.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import fabrique.studio.test.task.models.Survey;
 
-public interface SurveyRepository extends CrudRepository<Survey, Long> {
+public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
 }

@@ -1,5 +1,7 @@
 package fabrique.studio.test.task.models;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -43,8 +45,33 @@ public class Question {
         this.survey = survey;
     }
     
+    @Override
+    public boolean equals(Object o) {
+
+      if (this == o)
+        return true;
+      if (!(o instanceof Question))
+        return false;
+      Question question = (Question) o;
+      return Objects.equals(this.question_id, question.question_id) && Objects.equals(this.survey, question.survey)
+          && Objects.equals(this.text, question.text) && Objects.equals(this.answerType, question.answerType);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.question_id, this.survey, this.text, this.answerType);
+    }
+    
     public static enum AnswerType {
         SINGLE, ONE, SOME
+    }
+    
+    @Getter
+    @Setter
+    public static class QuestionRequest {
+        private long surveyId;
+        private String text;
+        private String answerType;
     }
 }
 
