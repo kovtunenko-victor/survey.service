@@ -1,7 +1,6 @@
 package fabrique.studio.test.task.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fabrique.studio.test.task.errors.SurveyServiceException;
 import fabrique.studio.test.task.models.Survey;
 import fabrique.studio.test.task.services.SurveyService;
 
@@ -21,43 +21,50 @@ import fabrique.studio.test.task.services.SurveyService;
 public class SurveryController {
     @Autowired
     SurveyService surveyService;
+    
+    @GetMapping(value = "/survery/getAllActiveSurveys", produces = "application/json")
+    public List<Survey.Response> getAllActiveSurveys() {
+        return surveyService.findAllActiveSurveys();
+    }
+    
+    @GetMapping(value = "/survery/getAllSurveysByExtUserId/{id}", produces = "application/json")
+    public List<Survey.ResponseWithAnswer> getAllSurveysByExtUserId(@PathVariable("id") long id) {
+        return surveyService.findAllSurveysByExtUserId(id);
+    }
 
     @GetMapping(value = "/admin/survery/getById/{id}", produces = "application/json")
-    public Survey getSurveyById(@PathVariable("id") long id) throws Exception {
-        Optional<Survey> survey = surveyService.findBySurveyId(id);
-
-        if (survey.isPresent()) {
-            return survey.get();
-        } else {
-            throw new Exception(String.format("SurveyId [%s] not found", id));
-        }
+    public Survey.Response getSurveyResponseById(@PathVariable("id") long id) throws SurveyServiceException {
+        return getSurveyById(id).new Response();
     }
 
     @GetMapping(value = "/admin/survery/getAll", produces = "application/json")
-    public List<Survey> getAllSurvey() throws Exception {
+    public List<Survey.Response> getAllSurvey() {
         return surveyService.findAll();
     }
 
     @PostMapping(value = "/admin/survery/create", produces = "application/json")
-    public Survey createSurvey(@RequestBody Survey.SurveyRequest request) throws Exception {
+    public Survey createSurvey(@RequestBody Survey.Request request) throws SurveyServiceException {
         Survey newSurvey = new Survey(request.getName(), request.getTitle(), request.getDateStart(), request.getDateEnd());
         return surveyService.saveSurvey(newSurvey);
     }
 
     @PutMapping(value = "/admin/survery/updateById/{id}", produces = "application/json")
-    public Survey updateSurveyById(@PathVariable("id") long id, @RequestBody Survey.SurveyRequest request) throws Exception {
+    public Survey updateSurveyById(@PathVariable("id") long id, @RequestBody Survey.Request request) throws SurveyServiceException {
         Survey survey = getSurveyById(id);
         
         survey.setName(request.getName());
         survey.setTitle(request.getTitle());
-        survey.setDateStart(request.getDateStart());
         survey.setDateEnd(request.getDateEnd());
         
         return surveyService.saveSurvey(survey);
     }
 
     @DeleteMapping(value = "/admin/survery/deleteById/{id}", produces = "application/json")
-    public void deleteSurveyById(@PathVariable("id") long id) throws Exception {
+    public void deleteSurveyById(@PathVariable("id") long id) {
         surveyService.deleteBySurveyId(id);
+    }
+    
+    private Survey getSurveyById(@PathVariable("id") long id) throws SurveyServiceException {
+        return surveyService.findBySurveyId(id);
     }
 }

@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 import fabrique.studio.test.task.models.Question;
 
 public interface QuestionRepository extends JpaRepository<Question, Long>{
-    @Query("select q from Question q where q.survey.survey_id = :survey_id")
-    List<Question> findAllBySurveryId(@Param("survey_id") long id);
+    @Query("select q from Question q where q.survey.surveyId = :surveyId")
+    List<Question> findAllBySurveryId(@Param("surveyId") long id);
 }
