@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import fabrique.studio.test.task.errors.SurveyServiceException;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +26,9 @@ import lombok.Setter;
 @Table(name = "question")
 @Getter
 @Setter
+
+@Hidden
+@Schema(description = "Question entity")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -74,12 +79,14 @@ public class Question {
     
     @Getter
     @Setter
-    public static class QuestionRequest {
+    @Schema(name = "Question.Request", description = "Question.Request entity")
+    public static class Request {
         private long surveyId;
         private String text;
         private String answerType;
     }
     
+    @Schema(name = "Question.Response", description = "Question.Response entity")
     public class Response {
         public long getQuestionId() {
             return Question.this.getQuestionId();

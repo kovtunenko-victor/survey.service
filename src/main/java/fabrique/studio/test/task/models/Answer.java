@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fabrique.studio.test.task.errors.SurveyServiceException;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +22,9 @@ import lombok.Setter;
 @Table(name = "answer")
 @Getter
 @Setter
+
+@Hidden
+@Schema(name = "Answer", description = "Answer entity")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -64,12 +69,14 @@ public class Answer {
     
     @Getter
     @Setter
+    @Schema(name = "Answer.Request", description = "Answer.Request entity")
     public static class Request {
         private long questionId;
         private long extUserId;
         private String text;
     }
     
+    @Schema(name = "Answer.Response", description = "Answer.Response entity")
     public class Response {
         public long getAnswerId() {
             return Answer.this.getAnswerId();
