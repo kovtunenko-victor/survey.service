@@ -73,6 +73,7 @@ public class Question {
       return Objects.hash(this.questionId, this.survey, this.text, this.answerType);
     }
     
+    @Schema(name = "Question.AnswerType", description = "Question.AnswerType enum")
     public static enum AnswerType {
         SINGLE, ONE, SOME
     }
@@ -83,6 +84,7 @@ public class Question {
     public static class Request {
         private long surveyId;
         private String text;
+        @Schema(description = "AnswerType is enum of SINGLE, ONE, SOME values")
         private String answerType;
     }
     
@@ -104,6 +106,7 @@ public class Question {
             return Question.this.getText();
         }
         
+        @Schema(description = "AnswerType is enum of SINGLE, ONE, SOME values")
         public String getAnswerType() {
             return Question.this.getAnswerType().name();
         }
