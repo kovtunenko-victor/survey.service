@@ -14,6 +14,17 @@
 10. Приложение запущено на 5.63.152.97 (http://5.63.152.97:9991/swagger-ui.html)
 
 
+UPD.
+3й пункт нужно перед build проекта настроить переменные среды:
+DB_HOST = 5.63.152.97:5436 (или любой другой сервер)
+DB_NAME = postgres
+DB_USER = postgres
+DB_PASSWORD = test 
+application.properties уже настроен на environment variables
+ 
+4й пункт исключаем. эта настройка перенесена в docker-compose.yml
+
+
 
 
 

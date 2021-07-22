@@ -4,6 +4,11 @@ services:
     build: ./
     container_name: survey-service
     restart: always
+    environment:
+      DB_HOST: db:5432
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: test
     ports:
       - 9991:8080
     depends_on:
